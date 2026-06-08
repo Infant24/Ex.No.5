@@ -34,111 +34,137 @@ Summary of findings with insights on how to structure prompts for optimal result
 
 
 # OUTPUT
+Task Chosen
 
-1. Basic Prompt (Unstructured)
+Task: Sentiment Analysis of a Product Review
 
-Prompt:
+Review:
+"The phone has an excellent camera and battery life, but the software is slow and crashes frequently."
 
-Look at this review and tell me what it is:
-“This phone is okay. Battery lasts long but camera is not good.”
+1. Basic Prompt
+Prompt
 
-Typical Model Response:
-Neutral / Mixed / Okay
+Analyze the sentiment of the following review:
 
-Observation:
+"The phone has an excellent camera and battery life, but the software is slow and crashes frequently."
 
-Too vague instruction
-No format guidance
-Different models may give inconsistent labels
-2. Zero-Shot Prompt (Refined but no examples)
+Response
 
-Prompt:
+The review expresses mixed sentiment.
 
-Classify the following product review as Positive, Negative, or Neutral.
-Respond with only one label.
-Review: “This phone is okay. Battery lasts long but camera is not good.”
+Positive points:
 
-Expected Response:
-Neutral
+Excellent camera
+Good battery life
 
-Observation:
+Negative points:
 
-Clear task definition
-Constrained output format
-Better consistency across models
-3. Few-Shot Prompt (With Examples)
+Slow software
+Frequent crashes
 
-Prompt:
+Overall sentiment: Mixed, with both positive and negative opinions.
 
-Classify product reviews as Positive, Negative, or Neutral.
+2. Zero-Shot Prompt
+Prompt
 
-Examples:
-Review: "The phone is amazing and works very fast." → Positive
-Review: "Worst battery life ever, very disappointing." → Negative
-Review: "It is okay, nothing special." → Neutral
+You are a sentiment analysis assistant.
 
-Now classify:
-Review: "This phone is okay. Battery lasts long but camera is not good."
+Determine whether the following review is Positive, Negative, or Mixed. Provide a brief explanation.
 
-Expected Response:
-Neutral
+Review:
+"The phone has an excellent camera and battery life, but the software is slow and crashes frequently."
 
-Observation:
+Response
 
-Model learns pattern from examples
-Improves accuracy on mixed sentiment cases
-Reduces ambiguity in interpretation
-4. Chain-of-Thought Prompt (Step-by-step reasoning)
+Sentiment: Mixed
 
-Prompt:
+Explanation:
+The review contains both positive and negative opinions. The camera and battery life are praised, while the software performance is criticized for being slow and unstable.
 
-Classify the following review as Positive, Negative, or Neutral.
-First, analyze the sentiment of each part of the sentence step by step, then give the final label.
-Respond only with the final label.
+3. Few-Shot Prompt
+Prompt
 
-Review: “This phone is okay. Battery lasts long but camera is not good.”
+Example 1:
 
-Typical Model Response (internal reasoning style):
+Review: "The laptop is fast, reliable, and easy to use."
 
-“Okay” → neutral sentiment
-“Battery lasts long” → positive sentiment
-“Camera is not good” → negative sentiment
-Mixed sentiments balance each other → overall neutral
-Final Answer: Neutral
+Sentiment: Positive
 
-Observation:
+Reason: The review contains only positive comments.
 
-Better handling of mixed sentiment
-Encourages structured reasoning
-Improves reliability for complex inputs
-However, more verbose and slower
-Evaluation Method Used: Rubric-Based Evaluation
+Example 2:
 
-We evaluate responses across 3 criteria (scale: 1–5):
+Review: "The printer breaks often and customer support is poor."
 
-| Prompt Type      | Clarity | Accuracy | Depth of Understanding | Overall Score |
-| ---------------- | ------- | -------- | ---------------------- | ------------- |
-| Basic Prompt     | 2       | 2        | 1                      | 1.7           |
-| Zero-Shot Prompt | 4       | 4        | 2                      | 3.3           |
-| Few-Shot Prompt  | 5       | 5        | 3                      | 4.3           |
-| Chain-of-Thought | 5       | 5        | 5                      | 5.0           |
+Sentiment: Negative
 
-Key Findings
-Basic prompts are too vague → inconsistent outputs
-Zero-shot prompts improve structure but lack guidance for edge cases
-Few-shot prompts significantly improve pattern recognition and accuracy
-Chain-of-thought prompts provide the deepest understanding, especially for mixed or complex inputs
-Final Insight
+Reason: The review contains only negative comments.
 
-As prompts become more structured (basic → zero-shot → few-shot → CoT), model performance improves in:
+Now analyze:
 
-Accuracy
-Consistency
-Reasoning quality
+Review: "The phone has an excellent camera and battery life, but the software is slow and crashes frequently."
 
-But they also trade off:
+Response
 
-Speed (CoT is slower)
-Simplicity (few-shot requires design effort)
+Sentiment: Mixed
+
+Reason:
+The review includes positive feedback about the camera and battery life, but negative feedback about software performance and stability.
+
+4. Chain-of-Thought Prompt
+Prompt
+
+Analyze the following review step by step.
+
+Review:
+"The phone has an excellent camera and battery life, but the software is slow and crashes frequently."
+
+Steps:
+
+Identify positive aspects.
+Identify negative aspects.
+Evaluate the impact of each aspect.
+Determine the overall sentiment.
+Provide the final conclusion.
+Response
+
+Step 1: Positive Aspects
+
+Excellent camera
+Long battery life
+
+Step 2: Negative Aspects
+
+Slow software
+Frequent crashes
+
+Step 3: Impact Analysis
+
+Camera quality improves user experience.
+Battery life increases usability.
+Slow software reduces efficiency.
+Crashes create frustration and reliability issues.
+
+Step 4: Overall Evaluation
+The review contains both positive and negative opinions.
+
+Step 5: Final Conclusion
+Sentiment: Mixed
+
+The user appreciates the hardware features but is dissatisfied with the software performance.
+
+Evaluation of Responses
+Evaluation Method: Quality, Accuracy, and Depth Analysis
+Prompt Type	Quality	Accuracy	Depth	Remarks
+Basic Prompt	Good	High	Low	Gives direct answer with limited details.
+Zero-Shot Prompt	Good	High	Medium	Clear classification and brief explanation.
+Few-Shot Prompt	Very Good	High	Medium	Examples help the model follow the desired format consistently.
+Chain-of-Thought Prompt	Excellent	High	High	Provides detailed reasoning and better transparency.
+Comparison Summary
+Technique	Advantages	Limitations
+Basic Prompt	Simple and fast	Less detailed
+Zero-Shot Prompt	No examples required	May vary in response quality
+Few-Shot Prompt	Improves consistency using examples	Requires additional prompt space
+Chain-of-Thought Prompt	Produces detailed reasoning and deeper understanding	Longer response time and output
 
 # RESULT: The prompt for the above said problem executed successfully
